@@ -22,13 +22,10 @@ class PopularVideoPagingSource(
         return try {
             val response = service.fetchPopularVideos(regionCode, chart, part, page)
 
-            val nextKey = if (response.items.isEmpty()) null else response.nextPageToken
-            val prevKey = if (page == STARTING_PAGE_TOKEN) null else response.prevPageToken
-
             LoadResult.Page(
                 data = response.items,
-                prevKey = prevKey,
-                nextKey = nextKey
+                prevKey = null,
+                nextKey = response.nextPageToken
             )
 
         } catch (e: IOException) {
